@@ -168,6 +168,8 @@ namespace Game_I
             character.upStat("Str", 2);
             character.printStat();
             character.printMoney();
+            Console.ReadKey();
+            Console.WriteLine("\n\n");
             /*Console.WriteLine("\n\n");
             Console.ReadKey();
             playerClass boss = new playerClass(5, "male");

@@ -292,7 +292,7 @@ namespace Game_I
                 }
             }
             setStairs();
-            setPlayer();
+            setPlayer(dieroller.totalRoll(1, 6));
         }
         private void setStairs()
         {
@@ -324,6 +324,144 @@ namespace Game_I
             }
             else
                 setPlayer();
+        }
+        private void setPlayer(int location)
+        {
+
+            int x;
+            int y;
+            bool again = true;
+            switch (location)
+            {
+                case 1:
+                    x = 1;
+                    y = 1;
+                    do
+                    {
+                        if (x < length && string.Compare(gameBoard[x, y].symbol, "#") != 0)
+                        {
+                            if (x < length && string.Compare(gameBoard[x, y].symbol, ">") != 0)
+                            {
+                                gameBoard[x, y].playerHere = true;
+                                Center[1, 0] = x;
+                                Center[1, 1] = y;
+                                again = false;
+                            }
+                            else
+                                x++;
+                        }
+                        else
+                            x++;
+                    } while (x < length && again);
+                    break;
+                case 2:
+                    x = 1;
+                    y = 1;
+                    do
+                    {
+                        if (y < width && string.Compare(gameBoard[x, y].symbol, "#") != 0)
+                        {
+                            if (y < width && string.Compare(gameBoard[x, y].symbol, ">") != 0)
+                            {
+                                gameBoard[x, y].playerHere = true;
+                                Center[1, 0] = x;
+                                Center[1, 1] = y;
+                                again = false;
+                            }
+                            else
+                                y++;
+                        }
+                        else
+                            y++;
+                    } while (y < width && again);
+                    break;
+                case 3:
+                    x = 1;
+                    y = width - 2;
+                    do
+                    {
+                        if (x < length && string.Compare(gameBoard[x, y].symbol, "#") != 0)
+                        {
+                            if (x < length && string.Compare(gameBoard[x, y].symbol, ">") != 0)
+                            {
+                                gameBoard[x, y].playerHere = true;
+                                Center[1, 0] = x;
+                                Center[1, 1] = y;
+                                again = false;
+                            }
+                            else
+                                x++;
+                        }
+                        else
+                            x++;
+                    } while (x < length && again);
+                    break;
+                case 4:
+                    x = length - 2;
+                    y = 1;
+                    do
+                    {
+                        if (y < width && string.Compare(gameBoard[x, y].symbol, "#") != 0)
+                        {
+                            if (y < width && string.Compare(gameBoard[x, y].symbol, ">") != 0)
+                            {
+                                gameBoard[x, y].playerHere = true;
+                                Center[1, 0] = x;
+                                Center[1, 1] = y;
+                                again = false;
+                            }
+                            else
+                                y++;
+                        }
+                        else
+                            y++;
+                    } while (y < width && again);
+                    break;
+                case 5:
+                    x = length - 2;
+                    y = width - 2;
+                    do
+                    {
+                        if (y >= 1 && string.Compare(gameBoard[x, y].symbol, "#") != 0)
+                        {
+                            if (y >= 1 && string.Compare(gameBoard[x, y].symbol, ">") != 0)
+                            {
+                                gameBoard[x, y].playerHere = true;
+                                Center[1, 0] = x;
+                                Center[1, 1] = y;
+                                again = false;
+                            }
+                            else
+                                y--;
+                        }
+                        else
+                            y--;
+                    } while (y >= 1 && again);
+                    break;
+                default:
+                    x = length - 2;
+                    y = width - 2;
+                    do
+                    {
+                        if (x >= 1 && string.Compare(gameBoard[x, y].symbol, "#") != 0)
+                        {
+                            if (x >= 1 && string.Compare(gameBoard[x, y].symbol, ">") != 0)
+                            {
+                                gameBoard[x, y].playerHere = true;
+                                Center[1, 0] = x;
+                                Center[1, 1] = y;
+                                again = false;
+                            }
+                            else
+                                x--;
+                        }
+                        else
+                            x--;
+                    } while (x >= 1 && again);
+                    break;
+            }
+            if (again)
+                setPlayer(dieroller.totalRoll(1, 6));
         }
         private bool checkOddRoom(int s,int o, int x, int y)
         {

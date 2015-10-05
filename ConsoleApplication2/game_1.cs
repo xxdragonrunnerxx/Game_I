@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace Game_I
 {
@@ -11,7 +14,6 @@ namespace Game_I
     {
         static void Main(string[] args)
         {
-            Console.SetWindowPosition(0, 0);
             Console.SetWindowSize(Console.LargestWindowWidth - 5, Console.LargestWindowHeight - 5);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(@"                                         ,   ,  ");

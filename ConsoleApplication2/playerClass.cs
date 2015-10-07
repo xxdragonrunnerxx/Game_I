@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***********************************************************
+  * Bradley Massey
+  * 9/6/2015
+  * C#
+  * playerClass
+  * 
+  * 
+  * 
+  ***********************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

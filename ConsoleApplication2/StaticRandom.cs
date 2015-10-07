@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***********************************************************
+  * Bradley Massey
+  * 9/6/2015
+  * C#
+  * StaticRandom
+  * 
+  * 
+  * random number generator
+  ***********************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Game_I
 {
+    //random number generator
     public static class StaticRandom
     {
         private static int seed;

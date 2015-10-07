@@ -72,35 +72,3 @@ namespace Game_I
         }
     }
 }
-/* // Data Members (Instance Variables)
-  private int hr;
-  private int min;
-  private int sec;
-   
-  
-  
-  
-  public void incrementCopper()
-  {
-    copper++;
-    if(copper>9)
-    {
-      copper=0;
-      incrementSilver();
-    }
-  }
-  
-  public void incrementSilver()
-  {
-    silver++;
-    if(silver>9)
-    {
-      silver=0;
-      incrementGold();
-    }
-  }
-
-  public void incrementGold()
-  {
-    gold++;
-  }*/

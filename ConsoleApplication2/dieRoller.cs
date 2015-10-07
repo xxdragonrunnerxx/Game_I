@@ -19,7 +19,7 @@ namespace Game_I
     //die roller class
     static class dieroller
     {
-        //roll 1d(s)
+        //roll d(s)
         private static int roll(int s)
         {
             int die = StaticRandom.Instance.Next(1, s+1);
@@ -48,6 +48,4 @@ namespace Game_I
             return total;
         }
     }
-
-    
 }

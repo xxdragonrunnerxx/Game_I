@@ -152,7 +152,6 @@ namespace Game_I
             playerClass character;
             do
             {
-                
                 Console.Write("Do you want to load a game?Y/N");
                 string continued = Console.ReadLine();
                 char c = Char.ToUpper(continued.FirstOrDefault());
@@ -170,6 +169,7 @@ namespace Game_I
                         break;
                     default:
                         character = newPlayer();
+                        again = false;
                         break;
                 }
             } while (again);
@@ -214,31 +214,39 @@ namespace Game_I
         }
         public static void saveGame(gameSave save)
         {
-
+            bool repeat = false;
             string fileName = "test.dat";
-
-            Console.Write("Which slot do you want to save in?(1 2 3 4)");
-            string saveSlot = Console.ReadLine();
-            char c = Char.ToUpper(saveSlot.FirstOrDefault());
-            switch (c)
+            do
             {
-                case '1':
-                    fileName = "save1.dat";
-                    break;
-                case '2':
-                    fileName = "save2.dat";
-                    break;
-                case '3':
-                    fileName = "save3.dat";
-                    break;
-                case '4':
-                    fileName = "save4.dat";
-                    break;
-                default:
-                    saveGame(save);
-                    break;
-            }
-
+                Console.Write("Which slot do you want to save in?(1 2 3 4)");
+                string saveSlot = Console.ReadLine();
+                saveSlot = validSave(saveSlot);
+                if (saveSlot.CompareTo("no save")==0)
+                    { return; }
+                char c = Char.ToUpper(saveSlot.FirstOrDefault());
+                switch (c)
+                {
+                    case '1':
+                        fileName = "save1.dat";
+                        repeat = false;
+                        break;
+                    case '2':
+                        fileName = "save2.dat";
+                        repeat = false;
+                        break;
+                    case '3':
+                        fileName = "save3.dat";
+                        repeat = false;
+                        break;
+                    case '4':
+                        fileName = "save4.dat";
+                        repeat = false;
+                        break;
+                    default:
+                        repeat = true;
+                        break;
+                }
+            } while (repeat);
             System.IO.Stream fs = File.OpenWrite(fileName);
 
             BinaryFormatter formatter = new BinaryFormatter();
@@ -250,33 +258,57 @@ namespace Game_I
             fs.Dispose();
 
         }
+        private static string validSave(string saveSlot)
+        {
+            int saveNumber;
+            bool again = true;
+            do
+            {
+                while (int.TryParse(saveSlot, out saveNumber) == false)
+                {
+                    Console.WriteLine("You did not enter a valid save slot.");
+                    Console.Write("Please enter a valid save slot:");
+                    saveSlot = Console.ReadLine();
+                }
+                if (saveNumber >= 1 && saveNumber <= 4)
+                    again = false;
+                else
+                {
+                    Console.WriteLine("You did not enter a valid save slot.");
+                    Console.Write("Please enter a valid save slot:");
+                    saveSlot = Console.ReadLine();
+                }
+            } while (again);
+            return saveSlot;
+        }
         public static gameSave loadGame()
         {
             gameSave save;
             string fileName = "test.dat";
-            Console.Write("which slot do you want to load from?(1 2 3 4)");
-            string saveSlot = Console.ReadLine();
-            char c = Char.ToUpper(saveSlot.FirstOrDefault());
-            switch (c)
-            {
-                case '1':
-                    fileName = "save1.dat";
-                    break;
-                case '2':
-                    fileName = "save2.dat";
-                    break;
-                case '3':
-                    fileName = "save3.dat";
-                    break;
-                case '4':
-                    fileName = "save4.dat";
-                    break;
-                default:
-                    loadGame();
-                    break;
-            }
             do
             {
+                Console.Write("Which slot do you want to load from?(1 2 3 4)");
+                string saveSlot = Console.ReadLine();
+                saveSlot = validSave(saveSlot);
+                char c = Char.ToUpper(saveSlot.FirstOrDefault());
+                switch (c)
+                {
+                    case '1':
+                        fileName = "save1.dat";
+                        break;
+                    case '2':
+                        fileName = "save2.dat";
+                        break;
+                    case '3':
+                        fileName = "save3.dat";
+                        break;
+                    case '4':
+                        fileName = "save4.dat";
+                        break;
+                    default:
+                        break;
+                }
+
 
                 try
                 {
@@ -293,16 +325,16 @@ namespace Game_I
                 }
                 catch (FileNotFoundException save1)//catches if can't find file
                 {
-                    Console.Write("Could not find that save file.");
+                    Console.WriteLine("Could not find that save file.");
                 }
                 catch (ArgumentException save1)
                 {
-                    Console.Write("Please enter a file name.");
+                    Console.WriteLine("Please enter a file name.");
                 }
-                
+
             } while (true);
 
-            
+
         }
         public static playerClass newPlayer()
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game_I
 {
+    [Serializable] 
     class money
     {
         int gold = 0;

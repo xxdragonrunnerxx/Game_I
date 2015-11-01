@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Game_I
 {
-          
+    [Serializable]      
     class playerClass
     {
        static string[] maleNames = {"Aache", "Aanwas", "Aaron", "Abaet", "Abarden", "Abbadon", "Abbe", "Abbo", "Abe", "Aberbysion", "Abeyaratne", "Aboloft", "Abril", "Abthony", "Abu", "Acamen", "Acear", "Acele", 

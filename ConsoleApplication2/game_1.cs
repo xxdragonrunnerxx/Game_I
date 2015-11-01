@@ -15,6 +15,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 
 namespace Game_I
@@ -146,34 +148,35 @@ namespace Game_I
             Console.WriteLine(@"(_______)|/     \||/     \|(_______/           \_______/");*/
             Console.WriteLine("\n\n");
             bool again = true;
+            gameSave save;
             playerClass character;
             do
             {
-                character = playerClass.newPlayer();
-                Console.WriteLine("Name: " + character.getName());
-                Console.WriteLine(character.getHistory());
-                Console.WriteLine(character.getGender());
-                if (!playerClass.newCharacter())
-                    break;
-                Console.Write("(C)ontinue?(Y)es or (N)o?");
+                
+                Console.Write("Do you want to load a game?Y/N");
                 string continued = Console.ReadLine();
                 char c = Char.ToUpper(continued.FirstOrDefault());
                 switch (c)
                 {
-                    case 'C':
-                        again = false;
-                            break;
                     case 'Y':
+                        save = loadGame();
+                        
+                        character = save.player;
                         again = false;
                         break;
                     case 'N':
-                        break;
-                    default:
+                        character = newPlayer();
                         again = false;
                         break;
+                    default:
+                        character = newPlayer();
+                        break;
                 }
-            } while (again && playerClass.newCharacter());
-            character.printStat();
+            } while (again);
+            Console.WriteLine("Name: " + character.getName());
+            Console.WriteLine(character.getHistory());
+            Console.WriteLine(character.getGender());
+            /*character.printStat();
             Console.ReadKey();
             Console.WriteLine("\n\n");
             character.upStat("Str", 2);
@@ -181,7 +184,7 @@ namespace Game_I
             character.printMoney();
             Console.ReadKey();
             Console.WriteLine("\n\n");
-            /*Console.WriteLine("\n\n");
+            Console.WriteLine("\n\n");
             Console.ReadKey();
             playerClass boss = new playerClass(5, "male");
             Console.WriteLine("Name: " + boss.getName());
@@ -202,10 +205,136 @@ namespace Game_I
             Console.ReadKey();
             Console.WriteLine("\n\n");
             board map2 = new board(60, 80, true);
-            map2.printBoard();            
+            map2.printBoard();
+            Console.ForegroundColor = ConsoleColor.White;
+            save = new gameSave(character, map);
+            saveGame(save);
             Console.ReadKey();
 
         }
+        public static void saveGame(gameSave save)
+        {
 
+            string fileName = "test.dat";
+
+            Console.Write("Which slot do you want to save in?(1 2 3 4)");
+            string saveSlot = Console.ReadLine();
+            char c = Char.ToUpper(saveSlot.FirstOrDefault());
+            switch (c)
+            {
+                case '1':
+                    fileName = "save1.dat";
+                    break;
+                case '2':
+                    fileName = "save2.dat";
+                    break;
+                case '3':
+                    fileName = "save3.dat";
+                    break;
+                case '4':
+                    fileName = "save4.dat";
+                    break;
+                default:
+                    saveGame(save);
+                    break;
+            }
+
+            System.IO.Stream fs = File.OpenWrite(fileName);
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            formatter.Serialize(fs, save);
+
+            fs.Flush();
+            fs.Close();
+            fs.Dispose();
+
+        }
+        public static gameSave loadGame()
+        {
+            gameSave save;
+            string fileName = "test.dat";
+            Console.Write("which slot do you want to load from?(1 2 3 4)");
+            string saveSlot = Console.ReadLine();
+            char c = Char.ToUpper(saveSlot.FirstOrDefault());
+            switch (c)
+            {
+                case '1':
+                    fileName = "save1.dat";
+                    break;
+                case '2':
+                    fileName = "save2.dat";
+                    break;
+                case '3':
+                    fileName = "save3.dat";
+                    break;
+                case '4':
+                    fileName = "save4.dat";
+                    break;
+                default:
+                    loadGame();
+                    break;
+            }
+            do
+            {
+
+                try
+                {
+                    System.IO.Stream fs = File.Open(fileName, FileMode.Open);
+
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    object obj = formatter.Deserialize(fs);
+                    save = (gameSave)obj;
+                    fs.Flush();
+                    fs.Close();
+                    fs.Dispose();
+                    return save;
+                }
+                catch (FileNotFoundException save1)//catches if can't find file
+                {
+                    Console.Write("Could not find that save file.");
+                }
+                catch (ArgumentException save1)
+                {
+                    Console.Write("Please enter a file name.");
+                }
+                
+            } while (true);
+
+            
+        }
+        public static playerClass newPlayer()
+        {
+            playerClass character;
+            bool again = true;
+            do
+            {
+                character = playerClass.newPlayer();
+                Console.WriteLine("Name: " + character.getName());
+                Console.WriteLine(character.getHistory());
+                Console.WriteLine(character.getGender());
+                if (!playerClass.newCharacter())
+                    break;
+                Console.Write("(C)ontinue?(Y)es or (N)o?");
+                string continued = Console.ReadLine();
+                char c = Char.ToUpper(continued.FirstOrDefault());
+                switch (c)
+                {
+                    case 'C':
+                        again = false;
+                        break;
+                    case 'Y':
+                        again = false;
+                        break;
+                    case 'N':
+                        break;
+                    default:
+                        again = false;
+                        break;
+                }
+            } while (again && playerClass.newCharacter());
+            return character;
+        }
     }
 }

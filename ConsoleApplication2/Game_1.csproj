@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="board.cs" />
     <Compile Include="dieRoller.cs" />
+    <Compile Include="gameSave.cs" />
     <Compile Include="game_1.cs" />
     <Compile Include="Items.cs" />
     <Compile Include="money.cs" />

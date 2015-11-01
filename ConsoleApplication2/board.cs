@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace Game_I
 {
+    [Serializable]
     class board
     {
         private tile[,] gameBoard;
